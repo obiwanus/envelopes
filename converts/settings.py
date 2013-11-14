@@ -36,6 +36,12 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
+    # Third-party
+    'south',
+
+    # Custom
+    'converts',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -70,4 +76,4 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-from local_settings import *
+from .local_settings import *
