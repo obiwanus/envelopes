@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% load static from staticfiles %}
+
+{% block content %}
+<div class="menu">
+    <ul class="nav nav-pills nav-stacked">
+        <li><a href="../converts/index.html">Состояние</a></li>
+        <li class="active"><a href="../converts/income.html">Доходы</a></li>
+        <li><a href="../converts/costs.html">Траты</a></li>
+        <li><a href="../converts/aims.html">Цели</a></li>
+    </ul>
+</div>
+<div class="content">
+    <h3>Доходы</h3>
+    <p>
+        К <b>доходам</b> относятся: заработная плата, пенсия, стипендия, пособие, доход от продажи товаров,
+        произведённых в собственном хозяйстве, денежные поступления в виде платы за оказанные услуги,
+        авторские гонорары, доход от продажи личного имущества, сдачи его в аренду.
+    </p>
+    <a class="btn btn-primary" href="{% url 'income_add' %}">Добавить новый доход</a>
+    <br><br>
+
+    {% if incomes %}
+        <table class="table table-bordered table-hover">
+            <tr>
+                <th>Название</th>
+                <th>Периодичность</th>
+                <th>Даты</th>
+                <th>Размер дохода</th>
+            </tr>
+            {% for income in incomes %}
+                <tr>
+                    <td>{{ income.name }}</td>
+                    <td>{{ income.periodicity }}</td>
+                    <td>начиная с {{ income.start_date }}</td>
+                    <td>{{ income.size }} NZD</td>
+                </tr>
+            {% endfor %}
+        </table>
+        <h5>Общая сумма ежемесячного дохода: 3200 NZD</h5>
+    {% endif %}
+</div>
+{% endblock content %}

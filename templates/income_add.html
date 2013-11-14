@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+{% load static from staticfiles %}
+
+
+{% block content %}
+    <div class="menu">
+        <ul class="nav nav-pills nav-stacked">
+            <li><a href="../converts/index.html">Состояние</a></li>
+            <li class="active"><a href="{% url 'income' %}">Доходы</a></li>
+            <li><a href="../converts/costs.html">Траты</a></li>
+            <li><a href="../converts/aims.html">Цели</a></li>
+        </ul>
+    </div>
+    <div class="content">
+        <h3>Добавить доход</h3>
+        <a class="btn" href="{% url 'income' %}"><i class="icon-arrow-left"></i>&nbsp;Все доходы</a>
+        <br><br>
+        <form action="{% url 'income_post' %}" method="POST">
+            {% csrf_token %}
+            <table width="100%">
+            <tr>
+                <td width="30%"><label for="name">Название дохода</label></td>
+                <td><input type="text" id="name" value="Заработная плата" name="name"></td>
+            </tr>
+            <tr>
+                <td><label>Периодичность</label></td>
+                <td>
+                    <select>
+                        <option>Раз в неделю</option>
+                        <option>Раз в две недели</option>
+                        <option>Ежемесячно</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td><label for="size">Размер дохода (NZD)</label></td>
+                <td><input type="text" id="size"></td>
+            </tr>
+            <tr>
+                <td><label for="date">Дата первой получки</label></td>
+                <td><input type="text" id="date"></td>
+            </tr>
+            </table>
+            <br>
+            <div>
+                <button type="submit" class="btn btn-success">Сохранить</button>&nbsp;&nbsp;&nbsp;
+                <button type="submit" class="btn btn-danger">Отмена</button>
+            </div>
+        </form>
+    </div>
+{% endblock content %}

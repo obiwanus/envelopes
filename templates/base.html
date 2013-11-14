@@ -1,0 +1,31 @@
+{% load static from staticfiles %}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="{% static "css/style.css" %}" type="text/css">
+    <link rel="stylesheet" href="{% static "css/bootstrap.css" %}" type="text/css">
+    <link rel="text/javascript" href="{% static "js/bootstrap.js" %}" type="text/css">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="keywords" content=""/>
+    <meta name="description" content="" />
+    <title>Конверты</title>
+</head>
+<body>
+    <div class="l-content">
+        {% block content %}
+{#            {% block menu %}#}
+{#                <div class="menu">#}
+{#                    <ul class="nav nav-pills nav-stacked">#}
+{#                        <li><a href="../converts/index.html">Состояние</a></li>#}
+{#                        <li class="active"><a href="{% url 'income' %}">Доходы</a></li>#}
+{#                        <li><a href="../converts/costs.html">Траты</a></li>#}
+{#                        <li><a href="../converts/aims.html">Цели</a></li>#}
+{#                    </ul>#}
+{#                </div>#}
+{#            {% endblock menu %}#}
+
+        {% endblock content %}
+    </div>
+</body>
+</html>
