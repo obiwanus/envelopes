@@ -15,11 +15,11 @@ PERIODICITY_CHOICES = (
 
 class Income(models.Model):
     user = models.ForeignKey(User, related_name='incomes')
-    name = models.CharField(u'Название', max_length=200)
-    periodicity = models.CharField(u'Периодичность', choices=PERIODICITY_CHOICES, max_length=50, default='f')
-    size = models.DecimalField(u'Размер(NZD)', default=0, max_digits=20, decimal_places=2)
-    start_date = models.DateField(u'Дата начала', default=datetime.date.today())
-    end_date = models.DateField(u'Дата окончания', blank=True, null=True)
+    name = models.CharField('Название', max_length=200)
+    periodicity = models.CharField('Периодичность', choices=PERIODICITY_CHOICES, max_length=50, default='f')
+    size = models.DecimalField('Размер(NZD)', default=0, max_digits=20, decimal_places=2)
+    start_date = models.DateField('Дата начала', default=datetime.date.today())
+    end_date = models.DateField('Дата окончания', blank=True, null=True)
 
 
 class Expense(models.Model):
