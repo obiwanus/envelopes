@@ -27,5 +27,5 @@ class Expense(models.Model):
     name = models.CharField(max_length=200)
     periodicity = models.CharField(choices=PERIODICITY_CHOICES, max_length=50)
     size = models.DecimalField(max_digits=20, decimal_places=2)
-    start_date = models.DateTimeField()
-    end_date = models.DateTimeField()
+    start_date = models.DateField()
+    end_date = models.DateField()
