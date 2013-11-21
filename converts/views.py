@@ -5,6 +5,10 @@ from converts.models import Income
 from converts.forms import NewIncomeForm
 
 
+def index(request):
+    return render(request, 'index.html')
+
+
 def income(request):
     context = {'incomes': Income.objects.all()}
     return render(request, 'income.html', context)

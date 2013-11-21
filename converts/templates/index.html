@@ -1,0 +1,69 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+
+{% block content %}
+<div class="menu">
+    <ul class="nav nav-pills nav-stacked">
+        <li class="active"><a href={% url 'index' %}>Состояние</a></li>
+        <li><a href={% url 'income' %}>Доходы</a></li>
+        <li><a href="../converts/costs.html">Траты</a></li>
+        <li><a href="../converts/aims.html">Цели</a></li>
+    </ul>
+</div>
+<div class="content">
+    <div style="float: right; text-align: right; margin-left: 30px; font-size: 18px;">
+        <b>За месяц</b><br>
+        <span class="label label-info" style="cursor: default;" title="За месяц">+ 200 NZD</span>
+    </div>
+    <ul class="pager">
+        <li class="previous">
+            <a href="#">&larr; Предыдущая</a>
+        </li>
+        <li>
+            <b style="font-size: 22px;">Неделя (17.11 - 23.11)</b>
+            <i class="label label-success" style="font-size: 20px; cursor:default;">+ 200 NZD</i>
+        </li>
+        <li class="next">
+            <a href="#">Следующая &rarr;</a>
+        </li>
+    </ul>
+    <table class="table table-hover table-week">
+        <tr>
+            <td>Понедельник</td>
+            <td>
+                <ul class="table-week_list">
+                    <li>Из конверта <b>(135NZD)</b> потрачено <b>0 NZD</b> <a class="btn btn-warning" href="">Изменить</a></li>
+                    <li>Отложить <b>135 NZD</b> <a class="btn btn-success" href="">Отложить</a> на Резервный фонд</li>
+                    <li>Потратить <b>135 NZD</b> <a class="btn btn-danger" href="">Потратить</a> на Спортзал</li>
+                </ul>
+            </td>
+        </tr>
+        <tr>
+            <td>Вторник</td>
+            <td>
+                <ul class="table-week_list">
+                    <li>
+                        Из конверта <b>(135NZD)</b> потрачено <b>0 NZD</b>
+                        &nbsp;&nbsp;<a class="btn btn-warning" href="">Изменить</a>
+                    </li>
+                    <li>
+                        Потратить <b>135 NZD</b>
+                        &nbsp;&nbsp;<a class="btn btn-danger" href="">Потратить</a>&nbsp;&nbsp;на Косметику
+                    </li>
+                </ul>
+            </td>
+        </tr>
+        <tr>
+            <td>Среда</td>
+            <td>
+                <ul class="table-week_list">
+                    <li>
+                        Потратить <b><i style="text-decoration: line-through">135 NZD</i> 250 NZD</b>&nbsp;&nbsp;на Косметику
+                        &nbsp;&nbsp;<a href=""><i class="icon-refresh"></i>Изменить</a>
+                    </li>
+                </ul>
+            </td>
+        </tr>
+    </table>
+</div>
+{% endblock content %}

@@ -32,3 +32,10 @@
     width: 180px;
     color: red;
 }
+
+.table-week_list {
+    list-style: none;
+}
+.table-week_list li {
+    padding: 5px 0;
+}

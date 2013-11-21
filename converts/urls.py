@@ -6,6 +6,7 @@ from converts import views
 admin.autodiscover()
 
 urlpatterns = patterns('',
+    url(r'^$', views.index, name='index'),
     url(r'^income/$', views.income, name='income'),
     url(r'^income/add/$', views.income_add, name='income_add'),
     url(r'^income/add/post$', views.income_post, name='income_post'),

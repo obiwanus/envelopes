@@ -4,8 +4,8 @@
 {% block content %}
 <div class="menu">
     <ul class="nav nav-pills nav-stacked">
-        <li><a href="../converts/index.html">Состояние</a></li>
-        <li class="active"><a href="../converts/income.html">Доходы</a></li>
+        <li><a href={% url 'index' %}>Состояние</a></li>
+        <li class="active"><a href={% url 'income' %}>Доходы</a></li>
         <li><a href="../converts/costs.html">Траты</a></li>
         <li><a href="../converts/aims.html">Цели</a></li>
     </ul>
