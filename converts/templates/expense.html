@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+
+{% block content %}
+<div class="menu">
+    <ul class="nav nav-pills nav-stacked">
+        <li><a href={% url 'index' %}>Состояние</a></li>
+        <li><a href={% url 'income' %}>Доходы</a></li>
+        <li><a class="active" href={% url 'expense' %}>Траты</a></li>
+        <li><a href="../converts/aims.html">Цели</a></li>
+    </ul>
+</div>
+<div class="content">
+    <h3>Расходы</h3>
+    <p>
+        К <b>расходам</b> относятся: коммунальные платежи, аренда жилья,
+        денежные расходы в виде платы за товары и услуги,
+        авторские гонорары, расход от продажи личного имущества, сдачи его в аренду.
+    </p>
+    <a class="btn btn-primary" href="{% url 'expense_add' %}">Добавить новый расход</a>
+    <br><br>
+
+    {% if expenses %}
+        <table class="table table-bordered table-hover">
+            <tr>
+                <th>Название</th>
+                <th>Периодичность</th>
+                <th>Даты</th>
+                <th>Размер расхода</th>
+            </tr>
+            {% for expense in expenses %}
+                <tr>
+                    <td>{{ expense.name }}</td>
+                    <td>{{ expense.periodicity }}</td>
+                    <td>начиная с {{ expense.start_date }}</td>
+                    <td>{{ expense.size }} NZD</td>
+                </tr>
+            {% endfor %}
+        </table>
+        <h5>Общая сумма ежемесячного расхода: 3200 NZD</h5>
+    {% endif %}
+</div>
+{% endblock content %}

@@ -25,8 +25,8 @@ class Income(models.Model):
 class Expense(models.Model):
     user = models.ForeignKey(User, related_name='expenses')
     name = models.CharField('Название', max_length=200)
-    periodicity = models.CharField('Периодичность', choices=PERIODICITY_CHOICES, max_length=50)
-    size = models.DecimalField('Размер (NZD)', max_digits=20, decimal_places=2)
+    periodicity = models.CharField('Периодичность', choices=PERIODICITY_CHOICES, max_length=50, default='f')
+    size = models.DecimalField('Размер (NZD)', default=0, max_digits=20, decimal_places=2)
     start_date = models.DateField('Дата начала', default=datetime.date.today())
     end_date = models.DateField('Последняя трата не позднее', blank=True, null=True)
 

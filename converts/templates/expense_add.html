@@ -11,10 +11,10 @@
         </ul>
     </div>
     <div class="content">
-        <h3>Добавить доход</h3>
-        <a class="btn" href="{% url 'income' %}"><i class="icon-arrow-left"></i>&nbsp;Все доходы</a>
+        <h3>Добавить расход</h3>
+        <a class="btn" href="{% url 'expense' %}"><i class="icon-arrow-left"></i>&nbsp;Все расходы</a>
         <br><br>
-        <form class="form-horizontal" method="POST" action="{% url "income_add" %}">
+        <form class="form-horizontal" method="POST" action="{% url "expense_add" %}">
         {% csrf_token %}
             {% for field in form %}
             <div class="control-group">
@@ -34,7 +34,7 @@
             <div class="control-group">
                 <div class="controls">
                     <input type="submit" class="btn btn-success" value="Сохранить">
-                    <a type="submit" href="{% url "income_add" %}" class="btn btn-danger">Отмена</a>
+                    <a type="submit" href="{% url "expense_add" %}" class="btn btn-danger">Отмена</a>
                 </div>
             </div>
         </form>
