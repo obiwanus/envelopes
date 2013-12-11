@@ -8,7 +8,7 @@
         <h3>Добавить цель</h3>
         <a class="btn" href="{% url 'goals' %}"><i class="icon-arrow-left"></i>&nbsp;Все цели</a>
         <br><br>
-        <form class="form-horizontal" method="POST" action="{% url "expense_add" %}">
+        <form class="form-horizontal" method="POST" action="{% url "goal_add" %}">
             {% csrf_token %}
             {% for field in form %}
             <div class="control-group">

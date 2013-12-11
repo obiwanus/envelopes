@@ -3,7 +3,7 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 
 from converts.models import Income, Expense
-from converts.forms import NewIncomeForm, NewExpenseForm
+from converts.forms import IncomeForm, ExpenseForm
 
 
 def index(request):
@@ -19,7 +19,7 @@ def incomes(request):
 
 @login_required(login_url='/admin/')
 def income_add(request):
-    form = NewIncomeForm(request.POST or None)
+    form = IncomeForm(request.POST or None)
     if form.is_valid():
         income = form.save(commit=False)
         income.user = request.user
@@ -37,7 +37,7 @@ def expenses(request):
 
 @login_required(login_url='/admin/')
 def expense_add(request):
-    form = NewExpenseForm(request.POST or None)
+    form = ExpenseForm(request.POST or None)
     if form.is_valid():
         expense = form.save(commit=False)
         expense.user = request.user
