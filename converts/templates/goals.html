@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+
+{% block menu %}{% include '_menu.html' with page='goals' %}{% endblock menu %}
+
+{% block content %}
+<div class="content">
+    <h3>Цели</h3>
+    <p>
+        К <b>целям</b> относятся любые крупные покупки или фонды, например, "Машина" или "Фонд на подарки".
+    </p>
+    <a class="btn btn-primary" href="{% url 'goal_add' %}">Добавить новую цель</a>
+
+</div>
+{% endblock content %}
