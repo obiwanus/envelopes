@@ -1,14 +1,20 @@
 from django import forms
-from converts.models import Income, Expense
+from converts import models
 
 
 class IncomeForm(forms.ModelForm):
     class Meta:
-        model = Income
+        model = models.Income
         exclude = ('user',)
 
 
 class ExpenseForm(forms.ModelForm):
     class Meta:
-        model = Expense
+        model = models.Expense
+        exclude = ('user',)
+
+
+class GoalForm(forms.ModelForm):
+    class Meta:
+        model = models.Goal
         exclude = ('user',)

@@ -2,8 +2,8 @@
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 
-from converts.models import Income, Expense
-from converts.forms import IncomeForm, ExpenseForm
+from converts.models import Income, Expense, Goal
+from converts.forms import IncomeForm, ExpenseForm, GoalForm
 
 
 def index(request):
@@ -13,8 +13,8 @@ def index(request):
 # Доходы
 @login_required(login_url='/admin/')
 def incomes(request):
-    context = {'incomes': Income.objects.all()}
-    return render(request, 'incomes.html', context)
+    ctx = {'incomes': Income.objects.all()}
+    return render(request, 'incomes.html', ctx)
 
 
 @login_required(login_url='/admin/')
@@ -31,8 +31,8 @@ def income_add(request):
 # Расходы
 @login_required(login_url='/admin/')
 def expenses(request):
-    context = {'expenses': Expense.objects.all()}
-    return render(request, 'expenses.html', context)
+    ctx = {'expenses': Expense.objects.all()}
+    return render(request, 'expenses.html', ctx)
 
 
 @login_required(login_url='/admin/')
@@ -48,10 +48,16 @@ def expense_add(request):
 
 @login_required(login_url='/admin/')
 def goals(request):
-
-    return render(request, 'goals.html')
+    ctx = {'goals': Goal.objects.all()}
+    return render(request, 'goals.html', ctx)
 
 
 @login_required(login_url='/admin/')
 def goal_add(request):
-    return render(request, 'goal_add.html')
+    form = GoalForm(request.POST or None)
+    if form.is_valid():
+        goal = form.save(commit=False)
+        goal.user = request.user
+        goal.save()
+        return redirect('goals')
+    return render(request, 'goal_add.html', {'form': form})

@@ -11,5 +11,31 @@
     </p>
     <a class="btn btn-primary" href="{% url 'goal_add' %}">Добавить новую цель</a>
 
+    <br><br>
+
+    {% if goals %}
+        <table class="table table-bordered table-hover">
+            <tr>
+                <th>Название</th>
+                <th>Достигнуть к</th>
+                <th>Размер накоплений</th>
+                <th>Выполнено</th>
+            </tr>
+            {% for item in goals %}
+                <tr>
+                    <td>{{ item.name }}</td>
+                    <td>{{ item.end_date }}</td>
+                    <td>{{ item.payment_size }} NZD</td>
+                    <td>
+                        <div style="border: 1px solid #aaa;">
+                            <div style="height: 20px; width: 30%; background: green;"></div>
+                        </div>
+                    </td>
+                </tr>
+            {% endfor %}
+        </table>
+        <h5>Общая сумма ежемесячного дохода: 3200 NZD</h5>
+    {% endif %}
+
 </div>
 {% endblock content %}
