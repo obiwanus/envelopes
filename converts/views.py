@@ -11,9 +11,9 @@ def index(request):
 
 
 # Доходы
-def income(request):
+def incomes(request):
     context = {'incomes': Income.objects.all()}
-    return render(request, 'income.html', context)
+    return render(request, 'incomes.html', context)
 
 
 @login_required(login_url='/admin/')
@@ -23,14 +23,14 @@ def income_add(request):
         income = form.save(commit=False)
         income.user = request.user
         income.save()
-        return redirect('income')
+        return redirect('incomes')
     return render(request, 'income_add.html', {'form': form})
 
 
 # Расходы
-def expense(request):
+def expenses(request):
     context = {'expenses': Expense.objects.all()}
-    return render(request, 'expense.html', context)
+    return render(request, 'expenses.html', context)
 
 
 @login_required(login_url='/admin/')
@@ -40,5 +40,5 @@ def expense_add(request):
         expense = form.save(commit=False)
         expense.user = request.user
         expense.save()
-        return redirect('expense')
+        return redirect('expenses')
     return render(request, 'expense_add.html', {'form': form})

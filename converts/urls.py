@@ -5,13 +5,15 @@ from converts import views
 
 admin.autodiscover()
 
-urlpatterns = patterns('',
+urlpatterns = patterns(
+    '',
     url(r'^$', views.index, name='index'),
-    url(r'^income/$', views.income, name='income'),
-    url(r'^expense/$', views.expense, name='expense'),
-    url(r'^income/add/$', views.income_add, name='income_add'),
-    url(r'^expense/add/$', views.expense_add, name='expense_add'),
-    # url(r'^converts/', include('converts.foo.urls')),
+    url(r'^incomes/$', views.incomes, name='incomes'),
+    url(r'^incomes/add/$', views.income_add, name='income_add'),
+    url(r'^expenses/$', views.expenses, name='expenses'),
+    url(r'^expenses/add/$', views.expense_add, name='expense_add'),
+    url(r'^goals/$', views.goals, name='goals'),
+    url(r'^goals/add/$', views.goal_add, name='goal_add'),
     url(r'^admin/', include(admin.site.urls)),
 )
 
