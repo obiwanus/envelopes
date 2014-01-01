@@ -14,6 +14,9 @@ urlpatterns = patterns(
     url(r'^expenses/add/$', views.expense_add, name='expense_add'),
     url(r'^goals/$', views.goals, name='goals'),
     url(r'^goals/add/$', views.goal_add, name='goal_add'),
+    url(r'^user/register/$',  views.user_add, name="register"),
+    url(r'^user/logout/$',  views.user_logout, name="logout"),
+    url(r'^user/login/$',  views.user_login, name="login"),
     url(r'^admin/', include(admin.site.urls)),
 )
 

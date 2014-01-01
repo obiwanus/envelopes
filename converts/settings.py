@@ -53,6 +53,12 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 )
 
+AUTHENTICATION_BACKENDS = (
+    'converts.utils.AuthBackend',
+    'converts.utils.AuthEmailBackend',
+    # 'django.contrib.auth.backends.ModelBackend',
+)
+
 ROOT_URLCONF = 'converts.urls'
 
 WSGI_APPLICATION = 'converts.wsgi.application'
@@ -81,3 +87,7 @@ STATICFILES_DIRS = (
 )
 
 from .local_settings import *
+
+
+ADMIN_LOGIN = 'olya@ivan.info'
+ADMIN_PASSWORD = '12345'

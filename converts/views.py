@@ -1,9 +1,12 @@
 # coding: utf-8
+from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth import login, authenticate, logout
+from django.contrib.auth.models import User
 from django.shortcuts import render, redirect
-
+from django.views.decorators.cache import never_cache
 from converts.models import Income, Expense, Goal
-from converts.forms import IncomeForm, ExpenseForm, GoalForm
+from converts.forms import IncomeForm, ExpenseForm, GoalForm, NewUserForm
 
 
 def index(request):
@@ -61,3 +64,32 @@ def goal_add(request):
         goal.save()
         return redirect('goals')
     return render(request, 'goal_add.html', {'form': form})
+
+
+def user_add(request):
+    form = NewUserForm(request.POST or None)
+    if form.is_valid():
+        email, password = form.cleaned_data['email'], form.cleaned_data['password']
+        User.objects.create_user(email, email, password)
+        return redirect('index')
+    return render(request, 'register.html', {'form': form})
+
+
+def user_logout(request):
+    logout(request)
+    return redirect('index')
+
+
+@never_cache
+def user_login(request):
+    form = NewUserForm(request.POST or None)
+    if form.is_valid():
+        email, password = form.cleaned_data['email'], form.cleaned_data['password']
+        user = authenticate(email=email, password=password)
+        if user:
+            login(request, user)
+        else:
+            messages.error(request, "Не удалось залогиниться")
+            return redirect('login')
+        return redirect('index')
+    return render(request, 'login.html', {'form': form})

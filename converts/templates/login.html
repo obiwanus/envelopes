@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+
+{% block content %}
+<div class="content">
+        <h3>Авторизация</h3>
+        <br><br>
+        <form class="form-horizontal" method="POST" action="{% url "login" %}">
+        {% csrf_token %}
+            {% for field in form %}
+            <div class="control-group">
+                <label class="control-label" style="text-align: left;">{{ field.label }}</label>
+                <div class="controls">
+                    {{ field }}
+                    {% if field.errors %}
+                        <ul class="alert alert-error uneditable-input form-errors">
+                            {% for error in field.errors %}
+                                <li>{{ error }}</li>
+                            {% endfor %}
+                        </ul>
+                    {% endif %}
+                </div>
+            </div>
+            {% endfor %}
+            <div class="control-group">
+                <div class="controls">
+                    <input type="submit" class="btn btn-success" value="Войти">
+                    <a type="submit" href="{% url "index" %}" class="btn btn-danger">Отмена</a>
+                </div>
+            </div>
+        </form>
+    </div>
+{% endblock content %}
