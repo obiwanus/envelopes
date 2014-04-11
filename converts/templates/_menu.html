@@ -4,5 +4,6 @@
         <li {% if page == 'incomes' %}class="active"{% endif %}><a href={% url 'incomes' %}>Доходы</a></li>
         <li {% if page == 'expenses' %}class="active"{% endif %}><a href={% url 'expenses' %}>Траты</a></li>
         <li {% if page == 'goals' %}class="active"{% endif %}><a href="{% url 'goals' %}">Цели</a></li>
+        <li {% if page == 'settings' %}class="active"{% endif %}><a href="{% url 'settings' %}">Настройки</a></li>
     </ul>
 </div>
