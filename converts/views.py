@@ -9,18 +9,19 @@ from converts.models import Income, Expense, Goal
 from converts.forms import IncomeForm, ExpenseForm, GoalForm, NewUserForm
 
 
+@login_required
 def index(request):
     return render(request, 'index.html')
 
 
 # Доходы
-@login_required(login_url='/admin/')
+@login_required
 def incomes(request):
     ctx = {'incomes': Income.objects.all()}
     return render(request, 'incomes.html', ctx)
 
 
-@login_required(login_url='/admin/')
+@login_required
 def income_add(request):
     form = IncomeForm(request.POST or None)
     if form.is_valid():
@@ -32,13 +33,13 @@ def income_add(request):
 
 
 # Расходы
-@login_required(login_url='/admin/')
+@login_required
 def expenses(request):
     ctx = {'expenses': Expense.objects.all()}
     return render(request, 'expenses.html', ctx)
 
 
-@login_required(login_url='/admin/')
+@login_required
 def expense_add(request):
     form = ExpenseForm(request.POST or None)
     if form.is_valid():
@@ -49,13 +50,13 @@ def expense_add(request):
     return render(request, 'expense_add.html', {'form': form})
 
 
-@login_required(login_url='/admin/')
+@login_required
 def goals(request):
     ctx = {'goals': Goal.objects.all()}
     return render(request, 'goals.html', ctx)
 
 
-@login_required(login_url='/admin/')
+@login_required
 def goal_add(request):
     form = GoalForm(request.POST or None)
     if form.is_valid():
@@ -66,7 +67,7 @@ def goal_add(request):
     return render(request, 'goal_add.html', {'form': form})
 
 
-def user_add(request):
+def register(request):
     form = NewUserForm(request.POST or None)
     if form.is_valid():
         email, password = form.cleaned_data['email'], form.cleaned_data['password']

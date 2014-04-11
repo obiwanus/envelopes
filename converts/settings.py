@@ -10,6 +10,8 @@ https://docs.djangoproject.com/en/1.6/ref/settings/
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
+from django.core.urlresolvers import reverse_lazy
+
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 
 
@@ -86,8 +88,9 @@ STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'static'),
 )
 
-from .local_settings import *
-
-
 ADMIN_LOGIN = 'olya@ivan.info'
 ADMIN_PASSWORD = '12345'
+
+LOGIN_URL = reverse_lazy('login')
+
+from .local_settings import *
