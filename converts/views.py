@@ -5,8 +5,8 @@ from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.models import User
 from django.shortcuts import render, redirect
 from django.views.decorators.cache import never_cache
-from converts.models import Income, Expense, Goal
-from converts.forms import IncomeForm, ExpenseForm, GoalForm, NewUserForm
+from converts.models import Income, Expense, Goal, Settings
+from converts.forms import IncomeForm, ExpenseForm, GoalForm, NewUserForm, SettingsForm
 
 
 @login_required
@@ -98,4 +98,9 @@ def user_login(request):
 
 @login_required
 def user_settings(request):
-    return render(request, 'settings.html')
+    settings, created = Settings.objects.get_or_create(user=request.user)
+    form = SettingsForm(request.POST or None, instance=settings)
+    if form.is_valid():
+        form.save()
+        return redirect('index')
+    return render(request, 'settings.html', {'form': form})

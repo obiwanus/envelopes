@@ -16,8 +16,9 @@ PERIODICITY_CHOICES = (
 class Settings(models.Model):
     user = models.OneToOneField(User, related_name='settings')
     start_date = models.DateField('Начало первого расчетного периода', default=datetime.date.today())
-    period_length = models.DateField(
+    period_length = models.CharField(
         'Длина периода',
+        max_length=2,
         default='f',
         choices=(('w', 'Неделя'), ('f', '2 недели'), ('m', 'Месяц')),
     )

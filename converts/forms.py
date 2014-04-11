@@ -3,6 +3,12 @@ from converts import models
 from django.contrib.auth.models import User
 
 
+class SettingsForm(forms.ModelForm):
+    class Meta:
+        model = models.Settings
+        exclude = ('user',)
+
+
 class IncomeForm(forms.ModelForm):
     class Meta:
         model = models.Income
