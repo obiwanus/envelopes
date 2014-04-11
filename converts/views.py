@@ -94,3 +94,7 @@ def user_login(request):
             return redirect('login')
         return redirect('index')
     return render(request, 'login.html', {'form': form})
+
+
+def user_settings(request):
+    return redirect('/')
