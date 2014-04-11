@@ -13,6 +13,16 @@ PERIODICITY_CHOICES = (
 )
 
 
+class Settings(models.Model):
+    user = models.OneToOneField(User, related_name='settings')
+    start_date = models.DateField('Начало первого расчетного периода', default=datetime.date.today())
+    period_length = models.DateField(
+        'Длина периода',
+        default='f',
+        choices=(('w', 'Неделя'), ('f', '2 недели'), ('m', 'Месяц')),
+    )
+
+
 class Income(models.Model):
     user = models.ForeignKey(User, related_name='incomes')
     name = models.CharField('Название', max_length=200)

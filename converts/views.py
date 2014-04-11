@@ -98,4 +98,4 @@ def user_login(request):
 
 @login_required
 def user_settings(request):
-    return redirect('/')
+    return render(request, 'settings.html')
