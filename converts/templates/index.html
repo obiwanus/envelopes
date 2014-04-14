@@ -5,55 +5,98 @@
 
 {% block content %}
 <div class="content">
-    <div style="float: right; text-align: right; margin-left: 30px; font-size: 18px;">
-        <b>За месяц</b><br>
-        <span class="label label-info" style="cursor: default;" title="За месяц">+ 200 NZD</span>
-    </div>
     <ul class="pager">
         <li class="previous">
             <a href="#">&larr; Предыдущая</a>
         </li>
         <li>
-            <b style="font-size: 22px;">Неделя (17.11 - 23.11)</b>
-            <i class="label label-success" style="font-size: 20px; cursor:default;">+ 200 NZD</i>
+            <b style="font-size: 22px;">Период 17.11 - 23.11</b>
         </li>
         <li class="next">
             <a href="#">Следующая &rarr;</a>
         </li>
     </ul>
+    <div class="help-block" style="padding: 13px; margin: 0; color: #000; border-top: 1px solid #ccc; background: rgba(0, 136, 204, 0.22);">
+        <table style="width: 100%;">
+            <tr>
+                <td style="width: 206px;"><b>Дней осталось</b>: 10</td>
+                <td><b>Денег осталось</b>: 195 NZD</td>
+                <td><b>В день</b>: 19 NZD</td>
+            </tr>
+        </table>
+    </div>
     <table class="table table-hover table-week">
-        <tr>
-            <td>Понедельник</td>
+        <tr class="passed">
+            <td>17 ноября</td>
             <td>
                 <ul class="table-week_list">
-                    <li>Из конверта <b>(135NZD)</b> потрачено <b>0 NZD</b> <a class="btn btn-warning" href="">Изменить</a></li>
-                    <li>Отложить <b>135 NZD</b> <a class="btn btn-success" href="">Отложить</a> на Резервный фонд</li>
-                    <li>Потратить <b>135 NZD</b> <a class="btn btn-danger" href="">Потратить</a> на Спортзал</li>
-                </ul>
-            </td>
-        </tr>
-        <tr>
-            <td>Вторник</td>
-            <td>
-                <ul class="table-week_list">
+                    <li><b>Заработная плата</b> &nbsp;<input class="input-mini money" type="text" value="1350"></li>
+                    <li><b>Спортзал</b> &nbsp;<input class="input-mini money" type="text" value="17"></li>
                     <li>
-                        Из конверта <b>(135NZD)</b> потрачено <b>0 NZD</b>
-                        &nbsp;&nbsp;<a class="btn btn-warning" href="">Изменить</a>
-                    </li>
-                    <li>
-                        Потратить <b>135 NZD</b>
-                        &nbsp;&nbsp;<a class="btn btn-danger" href="">Потратить</a>&nbsp;&nbsp;на Косметику
+                        <input class="input-medium nm" placeholder="На что" type="text">&nbsp;
+                        <input class="input-small money" type="text" value="0">
                     </li>
                 </ul>
             </td>
         </tr>
-        <tr>
-            <td>Среда</td>
+        <tr class="passed">
+            <td>18 ноября</td>
+            <td>
+                <ul class="table-week_list">
+                    <li><b>Одежда</b> &nbsp;<input class="input-mini money" type="text" value="150"></li>
+                    <li>
+                        <input class="input-medium nm" placeholder="На что" type="text">&nbsp;
+                        <input class="input-small money" type="text">
+                    </li>
+                </ul>
+            </td>
+        </tr>
+        <tr class="today">
+            <td>19 ноября</td>
             <td>
                 <ul class="table-week_list">
                     <li>
-                        Потратить <b><i style="text-decoration: line-through">135 NZD</i> 250 NZD</b>&nbsp;&nbsp;на Косметику
-                        &nbsp;&nbsp;<a href=""><i class="icon-refresh"></i>Изменить</a>
+                        <b>Косметика</b> &nbsp;<input class="input-mini money" type="text" value="300">
+                        &nbsp;<i style="text-decoration: line-through">135 NZD</i>
+                    </li>
+                    <li>
+                        <input class="input-medium nm" placeholder="На что" type="text">&nbsp;
+                        <input class="input-small money" type="text" value="0">
+                    </li>
+                </ul>
+            </td>
+        </tr>
+        <tr>
+            <td>20 ноября</td>
+            <td>
+                <ul class="table-week_list">
+                    <li><b>Ребенок</b> &nbsp;<input class="input-mini money" type="text" value="150"></li>
+                    <li>
+                        <input class="input-medium nm" placeholder="На что" type="text">&nbsp;
+                        <input class="input-small money" type="text">
+                    </li>
+                </ul>
+            </td>
+        </tr>
+        <tr>
+            <td>21 ноября</td>
+            <td>
+                <ul class="table-week_list">
+                    <li>
+                        <input class="input-medium nm" placeholder="На что" type="text">&nbsp;
+                        <input class="input-small money" type="text">
+                    </li>
+                </ul>
+            </td>
+        </tr>
+        <tr>
+            <td>22 ноября</td>
+            <td>
+                <ul class="table-week_list">
+                    <li><b>Резервный фонд</b> &nbsp; <input class="input-mini money" type="text" value="400">
+                    <li>
+                        <input class="input-medium nm" placeholder="На что" type="text">&nbsp;
+                        <input class="input-small money" type="text">
                     </li>
                 </ul>
             </td>

@@ -39,3 +39,25 @@
 .table-week_list li {
     padding: 5px 0;
 }
+
+input[type=text].nm {
+    margin: 0;
+}
+
+input[type=text].money {
+    width: 40px;
+    margin: 0;
+    text-align: right;
+}
+
+tr.passed {
+    background: #fafafa;
+}
+
+tr.today {
+    background: rgba(255, 248, 224, 0.99);
+}
+
+tr.today:hover td {
+    background: rgba(255, 242, 195, 0.99)!important;
+}
