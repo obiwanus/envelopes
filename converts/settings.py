@@ -26,6 +26,18 @@ DEBUG = True
 
 TEMPLATE_DEBUG = True
 
+TEMPLATE_CONTEXT_PROCESSORS = (
+    'django.contrib.auth.context_processors.auth',
+    'django.core.context_processors.debug',
+    'django.core.context_processors.i18n',
+    'django.core.context_processors.media',
+    'django.core.context_processors.static',
+    'django.core.context_processors.tz',
+    'django.contrib.messages.context_processors.messages',
+
+    'converts.context.full_url',
+)
+
 ALLOWED_HOSTS = []
 
 
@@ -41,12 +53,13 @@ INSTALLED_APPS = (
 
     # Third-party
     'south',
+    'qurl',
 
     # Custom
     'converts',
 )
 
-MIDDLEWARE_CLASSES = (
+MIDDLEWARECLASSES = (
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',

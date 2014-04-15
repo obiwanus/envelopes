@@ -1,4 +1,7 @@
 # coding: utf-8
+from datetime import datetime
+from dateutil import rrule
+from dateutil.relativedelta import relativedelta
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import login, authenticate, logout
@@ -9,9 +12,59 @@ from converts.models import Income, Expense, Goal, Settings
 from converts.forms import IncomeForm, ExpenseForm, GoalForm, NewUserForm, SettingsForm
 
 
+def get_user_periods(user):
+    """
+    Returns an rrule based on the user's start date of
+    the first period and period length
+    """
+    start, length = user.settings.start_date, user.settings.period_length
+    freq, interval = rrule.WEEKLY, 1
+    if length == 'd':
+        freq = rrule.DAILY
+    elif length == 'w':
+        freq = rrule.WEEKLY
+    elif length == 'f':
+        freq, interval = rrule.WEEKLY, 2
+    elif length == '4w':
+        freq, interval = rrule.WEEKLY, 4
+    elif length == 'm':
+        freq = rrule.MONTHLY
+    return rrule.rrule(freq, interval=interval, dtstart=start)
+
+
+def get_relativedelta(periodicity):
+    params = {
+        'd': dict(days=1),
+        'w': dict(weeks=1),
+        'f': dict(weeks=2),
+        '4w': dict(weeks=4),
+        'm': dict(months=1),
+    }
+    return relativedelta(**params[periodicity])
+
+
 @login_required
 def index(request):
-    return render(request, 'index.html')
+    try:
+        date = datetime.strptime(request.GET.get('d'), '%Y-%m-%d')
+    except (ValueError, TypeError):
+        # Today by default
+        date = datetime.today()
+    if date.date() < request.user.settings.start_date:
+        # There's nothing to show before the start date
+        return redirect('index', start_date=request.user.settings.start_date)
+
+    # Get the user's periods info
+    periods = get_user_periods(request.user)
+    period_start = periods.before(date + relativedelta(days=1))
+    period_end = period_start + get_relativedelta(request.user.settings.period_length) + relativedelta(days=-1)
+
+    return render(request, 'index.html', {
+        'period_start': period_start,
+        'period_end': period_end,
+        'next': periods.after(date),
+        'prev': periods.before(period_start),
+    })
 
 
 # Доходы

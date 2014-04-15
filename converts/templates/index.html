@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-{% load staticfiles %}
+{% load staticfiles qurl %}
 
 {% block menu %}{% include '_menu.html' with page='status' %}{% endblock menu %}
 
@@ -7,13 +7,15 @@
 <div class="content">
     <ul class="pager">
         <li class="previous">
-            <a href="#">&larr; Назад</a>
+            {% if prev %}
+                <a href="{% qurl full_url d=prev|date:'Y-m-d' %}">&larr; Назад</a>
+            {% endif %}
         </li>
         <li>
-            <b style="font-size: 22px;">Период 17.11 - 23.11</b>
+            <b style="font-size: 22px;">Период {{ period_start|date:'d.m' }} - {{ period_end|date:'d.m' }}</b>
         </li>
         <li class="next">
-            <a href="#">Вперед &rarr;</a>
+            <a href="{% qurl full_url d=next|date:'Y-m-d' %}">Вперед &rarr;</a>
         </li>
     </ul>
     <div class="help-block" style="padding: 13px; margin: 0; color: #000; border-top: 1px solid rgba(0, 136, 204, 0.41); background: rgba(0, 136, 204, 0.22);">
