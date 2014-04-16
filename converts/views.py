@@ -52,18 +52,46 @@ def index(request):
         date = datetime.today()
     if date.date() < request.user.settings.start_date:
         # There's nothing to show before the start date
-        return redirect('index', start_date=request.user.settings.start_date)
+        return redirect('index')
 
     # Get the user's periods info
     periods = get_user_periods(request.user)
     period_start = periods.before(date + relativedelta(days=1))
     period_end = period_start + get_relativedelta(request.user.settings.period_length) + relativedelta(days=-1)
 
+    exp = [
+        {'id': 12, 'name': "Спортзал", 'planned': 17},
+        {'id': 16, 'name': "Одежда", 'planned': 150},
+    ]
+
+    days = [
+        {'date': datetime(2014, 4, 10),
+         'status': 'passed',
+         'expenses': exp,
+         'incomes': [],
+         'goals': []},
+        {'date': datetime(2014, 4, 11),
+         'status': 'passed',
+         'expenses': exp,
+         'incomes': [],
+         'goals': []},
+        {'date': datetime(2014, 4, 12),
+         'status': 'today',
+         'expenses': exp,
+         'incomes': [],
+         'goals': []},
+        {'date': datetime(2014, 4, 13),
+         'expenses': exp,
+         'incomes': [],
+         'goals': []},
+    ]
+
     return render(request, 'index.html', {
         'period_start': period_start,
         'period_end': period_end,
         'next': periods.after(date),
         'prev': periods.before(period_start),
+        'days': days,
     })
 
 
