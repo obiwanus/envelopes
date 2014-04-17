@@ -12,24 +12,27 @@ from converts.models import Income, Expense, Goal, Settings
 from converts.forms import IncomeForm, ExpenseForm, GoalForm, NewUserForm, SettingsForm
 
 
+def get_dates(start, periodicity, end=None):
+    """ Returns an rrule based on provided parameters """
+    freq, interval = rrule.WEEKLY, 1
+    if periodicity == 'd':
+        freq = rrule.DAILY
+    elif periodicity == 'w':
+        freq = rrule.WEEKLY
+    elif periodicity == 'f':
+        freq, interval = rrule.WEEKLY, 2
+    elif periodicity == '4w':
+        freq, interval = rrule.WEEKLY, 4
+    elif periodicity == 'm':
+        freq = rrule.MONTHLY
+    return rrule.rrule(freq, interval=interval, dtstart=start, until=end)
+
+
 def get_user_periods(user):
     """
-    Returns an rrule based on the user's start date of
-    the first period and period length
+    Returns the user's rrule of periods based on settings
     """
-    start, length = user.settings.start_date, user.settings.period_length
-    freq, interval = rrule.WEEKLY, 1
-    if length == 'd':
-        freq = rrule.DAILY
-    elif length == 'w':
-        freq = rrule.WEEKLY
-    elif length == 'f':
-        freq, interval = rrule.WEEKLY, 2
-    elif length == '4w':
-        freq, interval = rrule.WEEKLY, 4
-    elif length == 'm':
-        freq = rrule.MONTHLY
-    return rrule.rrule(freq, interval=interval, dtstart=start)
+    return get_dates(user.settings.start_date, periodicity=user.settings.period_length)
 
 
 def get_relativedelta(periodicity):
@@ -45,11 +48,13 @@ def get_relativedelta(periodicity):
 
 @login_required
 def index(request):
+    today = datetime.today()
+    user = request.user
     try:
         date = datetime.strptime(request.GET.get('d'), '%Y-%m-%d')
     except (ValueError, TypeError):
         # Today by default
-        date = datetime.today()
+        date = today
     if date.date() < request.user.settings.start_date:
         # There's nothing to show before the start date
         return redirect('index')
@@ -59,32 +64,19 @@ def index(request):
     period_start = periods.before(date + relativedelta(days=1))
     period_end = period_start + get_relativedelta(request.user.settings.period_length) + relativedelta(days=-1)
 
-    exp = [
-        {'id': 12, 'name': "Спортзал", 'planned': 17},
-        {'id': 16, 'name': "Одежда", 'planned': 150},
-    ]
+    
 
-    days = [
-        {'date': datetime(2014, 4, 10),
-         'status': 'passed',
-         'expenses': exp,
-         'incomes': [],
-         'goals': []},
-        {'date': datetime(2014, 4, 11),
-         'status': 'passed',
-         'expenses': exp,
-         'incomes': [],
-         'goals': []},
-        {'date': datetime(2014, 4, 12),
-         'status': 'today',
-         'expenses': exp,
-         'incomes': [],
-         'goals': []},
-        {'date': datetime(2014, 4, 13),
-         'expenses': exp,
-         'incomes': [],
-         'goals': []},
-    ]
+    # Get each day of the current period
+    days = []
+    for dt in rrule.rrule(rrule.DAILY, dtstart=period_start, until=period_end):
+        day = {
+            'date': dt,
+            'status': '' if dt > today else 'today' if dt.date() == today.date() else 'passed',
+            'expenses': [],
+            'incomes': [],
+            'goals': [],
+        }
+        days.append(day)
 
     return render(request, 'index.html', {
         'period_start': period_start,
