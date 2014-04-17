@@ -36,7 +36,7 @@ def create_settings(sender, instance, created=False, **kwargs):
 
 class Income(models.Model):
     user = models.ForeignKey(User, related_name='incomes')
-    name = models.CharField('Название', max_length=200)
+    name = models.CharField('Название', max_length=200, db_index=True)
     periodicity = models.CharField('Периодичность', choices=PERIODICITY_CHOICES, max_length=50, default='f')
     size = models.DecimalField('Размер (NZD)', default=0, max_digits=20, decimal_places=2)
     start_date = models.DateField('Дата начала', default=datetime.date.today())
@@ -45,7 +45,7 @@ class Income(models.Model):
 
 class Expense(models.Model):
     user = models.ForeignKey(User, related_name='expenses')
-    name = models.CharField('Название', max_length=200)
+    name = models.CharField('Название', max_length=200, db_index=True)
     periodicity = models.CharField('Периодичность', choices=PERIODICITY_CHOICES, max_length=50, default='f')
     size = models.DecimalField('Размер (NZD)', default=0, max_digits=20, decimal_places=2)
     start_date = models.DateField('Дата начала', default=datetime.date.today())
@@ -54,7 +54,7 @@ class Expense(models.Model):
 
 class Goal(models.Model):
     user = models.ForeignKey(User, related_name='goals')
-    name = models.CharField('Название', max_length=200)
+    name = models.CharField('Название', max_length=200, db_index=True)
     price = models.DecimalField('Стоимость', default=0, max_digits=20, decimal_places=2)
     saved = models.DecimalField('Уже накоплено', default=0, max_digits=20, decimal_places=2)
     start_date = models.DateField('Дата начала накопления', default=datetime.date.today())
@@ -66,7 +66,7 @@ class Goal(models.Model):
 
 class ActualExpense(models.Model):
     user = models.ForeignKey(User, related_name='actual_expenses')
-    name = models.CharField('Название', max_length=255, default='')
+    name = models.CharField('Название', max_length=255, default='', db_index=True)
     size = models.DecimalField('Размер (NZD)', default=0, max_digits=20, decimal_places=2)
     date = models.DateField('Дата', default=datetime.date.today())
     regular_expense = models.ForeignKey(Expense, related_name='actual_expenses', blank=True, null=True)
