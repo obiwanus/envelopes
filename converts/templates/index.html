@@ -30,7 +30,7 @@
     <table class="table table-hover table-week">
         {% for day in days %}
             <tr {% if day.status %}class="{{ day.status }}"{% endif %}>
-                <td>{{ day.date|date }}</td>
+                <td>{{ day.date|date:"D, d M" }}</td>
                 <td>
                     <ul class="table-week_list">
                         {% for expense in day.expenses %}

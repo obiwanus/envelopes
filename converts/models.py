@@ -66,7 +66,7 @@ class Goal(models.Model):
 
 class ActualExpense(models.Model):
     user = models.ForeignKey(User, related_name='actual_expenses')
+    name = models.CharField('Название', max_length=255, default='')
     size = models.DecimalField('Размер (NZD)', default=0, max_digits=20, decimal_places=2)
     date = models.DateField('Дата', default=datetime.date.today())
-    description = models.CharField('Описание', max_length=255)
     regular_expense = models.ForeignKey(Expense, related_name='actual_expenses', blank=True, null=True)
