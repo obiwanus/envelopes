@@ -51,6 +51,9 @@ class Expense(models.Model):
     start_date = models.DateField('Дата начала', default=datetime.date.today())
     end_date = models.DateField('Последняя трата не позднее', blank=True, null=True)
 
+    def __str__(self):
+        return '%s (%s)' % (self.name, self.size)
+
 
 class Goal(models.Model):
     user = models.ForeignKey(User, related_name='goals')

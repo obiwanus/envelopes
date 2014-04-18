@@ -34,7 +34,7 @@
                 <td>
                     <ul class="table-week_list">
                         {% for expense in day.expenses %}
-                            <li><b>{{ expense.name }}</b> &nbsp;<input class="input-mini money" type="text" value="{{ expense.planned }}"></li>
+                            <li><b>{{ expense.name }}</b> &nbsp;<input class="input-mini money" type="text" value="{{ expense.size }}"></li>
                         {% endfor %}
                         <li>
                             <input class="input-medium nm" placeholder="На что" type="text">&nbsp;

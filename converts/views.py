@@ -6,6 +6,7 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.models import User
+from django.db.models import Q
 from django.shortcuts import render, redirect
 from django.views.decorators.cache import never_cache
 from converts.models import Income, Expense, Goal, Settings
@@ -51,20 +52,21 @@ def index(request):
     today = datetime.today()
     user = request.user
     try:
-        date = datetime.strptime(request.GET.get('d'), '%Y-%m-%d')
+        selected_date = datetime.strptime(request.GET.get('d'), '%Y-%m-%d')
     except (ValueError, TypeError):
         # Today by default
-        date = today
-    if date.date() < request.user.settings.start_date:
+        selected_date = today
+    if selected_date.date() < request.user.settings.start_date:
         # There's nothing to show before the start date
         return redirect('index')
 
     # Get the user's periods info
     periods = get_user_periods(request.user)
-    period_start = periods.before(date + relativedelta(days=1))
+    period_start = periods.before(selected_date + relativedelta(days=1))
     period_end = period_start + get_relativedelta(request.user.settings.period_length) + relativedelta(days=-1)
 
-    
+    # Get all regular expenses for this period
+    expenses = user.expenses.filter(Q(start_date__lte=period_end.date()) | Q(end_date__gte=period_start.date()))
 
     # Get each day of the current period
     days = []
@@ -72,7 +74,7 @@ def index(request):
         day = {
             'date': dt,
             'status': '' if dt > today else 'today' if dt.date() == today.date() else 'passed',
-            'expenses': [],
+            'expenses': [e for e in expenses if dt in list(get_dates(e.start_date, e.periodicity).between(period_start, period_end, inc=True))],
             'incomes': [],
             'goals': [],
         }
@@ -81,7 +83,7 @@ def index(request):
     return render(request, 'index.html', {
         'period_start': period_start,
         'period_end': period_end,
-        'next': periods.after(date),
+        'next': periods.after(selected_date),
         'prev': periods.before(period_start),
         'days': days,
     })
@@ -89,7 +91,7 @@ def index(request):
 
 # Доходы
 @login_required
-def incomes(request):
+def user_incomes(request):
     ctx = {'incomes': Income.objects.all()}
     return render(request, 'incomes.html', ctx)
 
@@ -107,7 +109,7 @@ def income_add(request):
 
 # Расходы
 @login_required
-def expenses(request):
+def regular_expenses(request):
     ctx = {'expenses': Expense.objects.all()}
     return render(request, 'expenses.html', ctx)
 
@@ -124,7 +126,7 @@ def expense_add(request):
 
 
 @login_required
-def goals(request):
+def user_goals(request):
     ctx = {'goals': Goal.objects.all()}
     return render(request, 'goals.html', ctx)
 
