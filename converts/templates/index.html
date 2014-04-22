@@ -18,15 +18,57 @@
             <a href="{% qurl full_url d=next|date:'Y-m-d' %}">Вперед &rarr;</a>
         </li>
     </ul>
-    <div class="help-block" style="padding: 13px; margin: 0; color: #000; border-top: 1px solid rgba(0, 136, 204, 0.41); background: rgba(0, 136, 204, 0.22);">
-        <table style="width: 100%;">
-            <tr>
-                <td style="width: 206px;"><b>Дней осталось</b>: 10</td>
-                <td><b>Денег осталось</b>: 195 NZD</td>
-                <td><b>В день</b>: 19 NZD</td>
-            </tr>
-        </table>
-    </div>
+    <table class="table table-week" style="background: #fafafa">
+        <tr>
+            <td style="width: 35%;">
+                <h4>Баланс</h4>
+                <table class="table">
+                    {# Incomes #}
+                    <tr class="income"><td><b>Заработная плата</b></td><td>&nbsp;1164</td></tr>
+
+                    {# Expenses #}
+                    <tr><td><b>Спортзал</b></td><td>&nbsp;34</td></tr>
+                    <tr><td><b>Товары для дома</b></td><td>&nbsp;65</td></tr>
+                    <tr><td><b>Еда</b></td><td>&nbsp;300</td></tr>
+                    <tr><td><b>Ребенок</b></td><td>&nbsp;60</td></tr>
+                    <tr><td><b>Страховка</b></td><td>&nbsp;188</td></tr>
+
+                    {# Total #}
+                    <tr class="total positive"><td><b>Баланс</b></td><td>&nbsp;<b>235</b></td></tr>
+                    <tr class="total"><td><b>Конверт</b></td><td>&nbsp;13</td></tr>
+                </table>
+
+
+                <table class="table">
+
+                </table>
+            </td>
+            <td style="width: 65%;">
+                <h4>Траты</h4>
+                <table class="table table-hover table-week">
+                    {% for day in days %}
+                        <tr {% if day.status %}class="{{ day.status }}"{% endif %}>
+                            <td>{{ day.date|date:"D, d M" }}</td>
+                            <td>
+                                <ul class="table-week_list">
+                                    {% for expense in day.expenses %}
+                                        <li><b>{{ expense.name }}</b> &nbsp;<input class="input-mini money" type="text" value="{{ expense.size }}"></li>
+                                    {% endfor %}
+                                    <li>
+                                        <input class="input-medium nm" placeholder="На что" type="text">&nbsp;
+                                        <input class="input-small money" type="text" value="0">
+                                    </li>
+                                </ul>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </table>
+            </td>
+        </tr>
+    </table>
+
+
+    {% comment %}
     <table class="table table-hover table-week">
         {% for day in days %}
             <tr {% if day.status %}class="{{ day.status }}"{% endif %}>
@@ -121,5 +163,6 @@
             </td>
         </tr>
     </table>
+    {% endcomment %}
 </div>
 {% endblock content %}

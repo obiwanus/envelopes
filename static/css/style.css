@@ -61,3 +61,16 @@ tr.today {
 tr.today:hover td {
     background: rgba(255, 242, 195, 0.99)!important;
 }
+
+tr.income td {
+    color: #418924;
+}
+
+tr.total td {
+    border-top-width: 3px;
+    color: #0088cc;
+}
+
+tr.positive > td {
+    color: #418924;
+}
