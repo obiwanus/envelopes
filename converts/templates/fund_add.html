@@ -1,14 +1,14 @@
 {% extends 'base.html' %}
 {% load staticfiles %}
 
-{% block menu %}{% include '_menu.html' with page='goals' %}{% endblock menu %}
+{% block menu %}{% include '_menu.html' with page='funds' %}{% endblock menu %}
 
 {% block content %}
     <div class="content">
         <h3>Добавить цель</h3>
-        <a class="btn" href="{% url 'goals' %}"><i class="icon-arrow-left"></i>&nbsp;Все цели</a>
+        <a class="btn" href="{% url 'funds' %}"><i class="icon-arrow-left"></i>&nbsp;Все цели</a>
         <br><br>
-        <form class="form-horizontal" method="POST" action="{% url "goal_add" %}">
+        <form class="form-horizontal" method="POST" action="{% url "fund_add" %}">
             {% csrf_token %}
             {% for field in form %}
             <div class="control-group">
@@ -28,7 +28,7 @@
             <div class="control-group">
                 <div class="controls">
                     <input type="submit" class="btn btn-success" value="Сохранить">
-                    <a type="submit" href="{% url 'goals' %}" class="btn btn-danger">Отмена</a>
+                    <a type="submit" href="{% url 'funds' %}" class="btn btn-danger">Отмена</a>
                 </div>
             </div>
         </form>

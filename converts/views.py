@@ -9,8 +9,8 @@ from django.contrib.auth.models import User
 from django.db.models import Q
 from django.shortcuts import render, redirect
 from django.views.decorators.cache import never_cache
-from converts.models import Income, Expense, Goal, Settings
-from converts.forms import IncomeForm, ExpenseForm, GoalForm, NewUserForm, SettingsForm
+from converts.models import Income, Expense, Fund, Settings
+from converts.forms import IncomeForm, ExpenseForm, FundForm, NewUserForm, SettingsForm
 
 
 def get_dates(start, periodicity, end=None):
@@ -76,7 +76,7 @@ def index(request):
             'status': '' if dt > today else 'today' if dt.date() == today.date() else 'passed',
             'expenses': [e for e in expenses if dt in list(get_dates(e.start_date, e.periodicity).between(period_start, period_end, inc=True))],
             'incomes': [],
-            'goals': [],
+            'funds': [],
         }
         days.append(day)
 
@@ -126,20 +126,20 @@ def expense_add(request):
 
 
 @login_required
-def user_goals(request):
-    ctx = {'goals': Goal.objects.all()}
-    return render(request, 'goals.html', ctx)
+def user_funds(request):
+    ctx = {'funds': Fund.objects.all()}
+    return render(request, 'funds.html', ctx)
 
 
 @login_required
-def goal_add(request):
-    form = GoalForm(request.POST or None)
+def fund_add(request):
+    form = FundForm(request.POST or None)
     if form.is_valid():
-        goal = form.save(commit=False)
-        goal.user = request.user
-        goal.save()
-        return redirect('goals')
-    return render(request, 'goal_add.html', {'form': form})
+        fund = form.save(commit=False)
+        fund.user = request.user
+        fund.save()
+        return redirect('funds')
+    return render(request, 'fund_add.html', {'form': form})
 
 
 def register(request):

@@ -55,8 +55,9 @@ class Expense(models.Model):
         return '%s (%s)' % (self.name, self.size)
 
 
-class Goal(models.Model):
-    user = models.ForeignKey(User, related_name='goals')
+class Fund(models.Model):
+    """ Sum of money saved on a particular purpose """
+    user = models.ForeignKey(User, related_name='funds')
     name = models.CharField('Название', max_length=200, db_index=True)
     price = models.DecimalField('Стоимость', default=0, max_digits=20, decimal_places=2)
     saved = models.DecimalField('Уже накоплено', default=0, max_digits=20, decimal_places=2)

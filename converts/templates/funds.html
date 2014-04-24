@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% load staticfiles %}
 
-{% block menu %}{% include '_menu.html' with page='goals' %}{% endblock menu %}
+{% block menu %}{% include '_menu.html' with page='funds' %}{% endblock menu %}
 
 {% block content %}
 <div class="content">
@@ -9,11 +9,11 @@
     <p>
         К <b>целям</b> относятся любые крупные покупки или фонды, например, "Машина" или "Фонд на подарки".
     </p>
-    <a class="btn btn-primary" href="{% url 'goal_add' %}">Добавить новую цель</a>
+    <a class="btn btn-primary" href="{% url 'fund_add' %}">Добавить новую цель</a>
 
     <br><br>
 
-    {% if goals %}
+    {% if funds %}
         <table class="table table-bordered table-hover">
             <tr>
                 <th>Название</th>
@@ -21,7 +21,7 @@
                 <th>Размер накоплений</th>
                 <th>Выполнено</th>
             </tr>
-            {% for item in goals %}
+            {% for item in funds %}
                 <tr>
                     <td>{{ item.name }}</td>
                     <td>{{ item.end_date }}</td>

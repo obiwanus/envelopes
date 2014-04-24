@@ -21,9 +21,9 @@ class ExpenseForm(forms.ModelForm):
         exclude = ('user',)
 
 
-class GoalForm(forms.ModelForm):
+class FundForm(forms.ModelForm):
     class Meta:
-        model = models.Goal
+        model = models.Fund
         exclude = ('user',)
 
 
