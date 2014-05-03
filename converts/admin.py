@@ -1,5 +1,5 @@
 from django.contrib import admin
-from converts.models import Income, Expense, Fund, ActualExpense, Settings
+from converts.models import Income, Expense, Fund, ActualExpense
 
 
 class IncomeAdmin(admin.ModelAdmin):
@@ -15,15 +15,14 @@ class FundAdmin(admin.ModelAdmin):
 
 
 class ActualExpenseAdmin(admin.ModelAdmin):
-    list_display = ('user', 'size', 'date', 'regular_expense')
+    list_display = ('size', 'date', 'regular_expense')
 
 
 class SettingsAdmin(admin.ModelAdmin):
-    list_display = ('user', 'start_date', 'period_length')
+    list_display = ('start_date', 'period_length')
 
 
 admin.site.register(Income, IncomeAdmin)
 admin.site.register(Expense, ExpenseAdmin)
 admin.site.register(Fund, FundAdmin)
 admin.site.register(ActualExpense, ActualExpenseAdmin)
-admin.site.register(Settings, SettingsAdmin)

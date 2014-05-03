@@ -8,7 +8,7 @@
         <h3>Добавить доход</h3>
         <a class="btn" href="{% url 'incomes' %}"><i class="icon-arrow-left"></i>&nbsp;Все доходы</a>
         <br><br>
-        <form class="form-horizontal" method="POST" action="{% url "income_add" %}">
+        <form class="form-horizontal" method="POST" action="{% url "regular_income_add" %}">
         {% csrf_token %}
             {% for field in form %}
             <div class="control-group">
@@ -28,7 +28,7 @@
             <div class="control-group">
                 <div class="controls">
                     <input type="submit" class="btn btn-success" value="Сохранить">
-                    <a type="submit" href="{% url "income_add" %}" class="btn btn-danger">Отмена</a>
+                    <a type="submit" href="{% url "regular_income_add" %}" class="btn btn-danger">Отмена</a>
                 </div>
             </div>
         </form>

@@ -106,4 +106,11 @@ ADMIN_PASSWORD = '12345'
 
 LOGIN_URL = reverse_lazy('login')
 
+
+def start_date():
+    raise NotImplementedError("Please specify the start date in your local_settings.py")
+
+START_DATE = start_date
+PERIOD_LENGTH = 'f'
+
 from .local_settings import *

@@ -2,15 +2,11 @@
 from datetime import datetime
 from dateutil import rrule
 from dateutil.relativedelta import relativedelta
-from django.contrib import messages
-from django.contrib.auth.decorators import login_required
-from django.contrib.auth import login, authenticate, logout
-from django.contrib.auth.models import User
 from django.db.models import Q
 from django.shortcuts import render, redirect
-from django.views.decorators.cache import never_cache
-from converts.models import Income, Expense, Fund, Settings
-from converts.forms import IncomeForm, ExpenseForm, FundForm, NewUserForm, SettingsForm
+from django.conf import settings
+from converts.models import Income, Expense, Fund
+from converts.forms import IncomeForm, ExpenseForm, FundForm
 
 
 def get_dates(start, periodicity, end=None):
@@ -29,11 +25,11 @@ def get_dates(start, periodicity, end=None):
     return rrule.rrule(freq, interval=interval, dtstart=start, until=end)
 
 
-def get_user_periods(user):
+def get_periods():
     """
-    Returns the user's rrule of periods based on settings
+    Returns the rrule of periods based on settings
     """
-    return get_dates(user.settings.start_date, periodicity=user.settings.period_length)
+    return get_dates(settings.START_DATE, periodicity=settings.PERIOD_LENGTH)
 
 
 def get_relativedelta(periodicity):
@@ -47,26 +43,24 @@ def get_relativedelta(periodicity):
     return relativedelta(**params[periodicity])
 
 
-@login_required
 def index(request):
     today = datetime.today()
-    user = request.user
     try:
         selected_date = datetime.strptime(request.GET.get('d'), '%Y-%m-%d')
     except (ValueError, TypeError):
         # Today by default
         selected_date = today
-    if selected_date.date() < request.user.settings.start_date:
+    if selected_date.date() < settings.START_DATE:
         # There's nothing to show before the start date
         return redirect('index')
 
-    # Get the user's periods info
-    periods = get_user_periods(request.user)
+    # Get the periods info
+    periods = get_periods()
     period_start = periods.before(selected_date + relativedelta(days=1))
-    period_end = period_start + get_relativedelta(request.user.settings.period_length) + relativedelta(days=-1)
+    period_end = period_start + get_relativedelta(settings.PERIOD_LENGTH) + relativedelta(days=-1)
 
     # Get all regular expenses for this period
-    expenses = user.expenses.filter(Q(start_date__lte=period_end.date()) | Q(end_date__gte=period_start.date()))
+    expenses = Expense.objects.filter(Q(start_date__lte=period_end.date()) | Q(end_date__gte=period_start.date()))
 
     # Get each day of the current period
     days = []
@@ -89,93 +83,40 @@ def index(request):
     })
 
 
-# Доходы
-@login_required
-def user_incomes(request):
+def regular_incomes_list(request):
     ctx = {'incomes': Income.objects.all()}
     return render(request, 'incomes.html', ctx)
 
 
-@login_required
-def income_add(request):
+def regular_income_add(request):
     form = IncomeForm(request.POST or None)
     if form.is_valid():
-        income = form.save(commit=False)
-        income.user = request.user
-        income.save()
+        form.save()
         return redirect('incomes')
     return render(request, 'income_add.html', {'form': form})
 
 
-# Расходы
-@login_required
-def regular_expenses(request):
+def regular_expenses_list(request):
     ctx = {'expenses': Expense.objects.all()}
     return render(request, 'expenses.html', ctx)
 
 
-@login_required
-def expense_add(request):
+def regular_expense_add(request):
     form = ExpenseForm(request.POST or None)
     if form.is_valid():
-        expense = form.save(commit=False)
-        expense.user = request.user
-        expense.save()
+        form.save()
         return redirect('expenses')
     return render(request, 'expense_add.html', {'form': form})
 
 
-@login_required
-def user_funds(request):
+def funds_list(request):
     ctx = {'funds': Fund.objects.all()}
     return render(request, 'funds.html', ctx)
 
 
-@login_required
 def fund_add(request):
     form = FundForm(request.POST or None)
     if form.is_valid():
-        fund = form.save(commit=False)
-        fund.user = request.user
-        fund.save()
+        form.save()
         return redirect('funds')
     return render(request, 'fund_add.html', {'form': form})
-
-
-def register(request):
-    form = NewUserForm(request.POST or None)
-    if form.is_valid():
-        email, password = form.cleaned_data['email'], form.cleaned_data['password']
-        User.objects.create_user(email, email, password)
-        return redirect('index')
-    return render(request, 'register.html', {'form': form})
-
-
-def user_logout(request):
-    logout(request)
-    return redirect('index')
-
-
-@never_cache
-def user_login(request):
-    form = NewUserForm(request.POST or None)
-    if form.is_valid():
-        email, password = form.cleaned_data['email'], form.cleaned_data['password']
-        user = authenticate(email=email, password=password)
-        if user:
-            login(request, user)
-        else:
-            messages.error(request, "Не удалось залогиниться")
-            return redirect('login')
-        return redirect('index')
-    return render(request, 'login.html', {'form': form})
-
-
-@login_required
-def user_settings(request):
-    settings, created = Settings.objects.get_or_create(user=request.user)
-    form = SettingsForm(request.POST or None, instance=settings)
-    if form.is_valid():
-        form.save()
-        return redirect('index')
-    return render(request, 'settings.html', {'form': form})

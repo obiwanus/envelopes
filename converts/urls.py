@@ -8,16 +8,12 @@ admin.autodiscover()
 urlpatterns = patterns(
     '',
     url(r'^$', views.index, name='index'),
-    url(r'^incomes/$', views.user_incomes, name='incomes'),
-    url(r'^incomes/add/$', views.income_add, name='income_add'),
-    url(r'^expenses/$', views.regular_expenses, name='expenses'),
-    url(r'^expenses/add/$', views.expense_add, name='expense_add'),
-    url(r'^funds/$', views.user_funds, name='funds'),
+    url(r'^incomes/$', views.regular_incomes_list, name='incomes'),
+    url(r'^incomes/add/$', views.regular_income_add, name='regular_income_add'),
+    url(r'^expenses/$', views.regular_expenses_list, name='expenses'),
+    url(r'^expenses/add/$', views.regular_expense_add, name='regular_expense_add'),
+    url(r'^funds/$', views.funds_list, name='funds'),
     url(r'^funds/add/$', views.fund_add, name='fund_add'),
-    url(r'^settings/$', views.user_settings, name='settings'),
-    url(r'^user/register/$',  views.register, name='register'),
-    url(r'^user/logout/$',  views.user_logout, name='logout'),
-    url(r'^user/login/$',  views.user_login, name='login'),
     url(r'^admin/', include(admin.site.urls)),
 )
 
