@@ -1,3 +1,23 @@
+.container {
+    max-width: 1000px;
+}
+
+.content {
+    padding: 60px 0;
+}
+
+.pager .period {
+    margin: 0;
+}
+
+.spend-today {
+    margin: 30px 0;
+}
+
+.state-table {
+    margin: 30px 0;
+}
+
 /*
 .l-content {
     width: 1000px;
