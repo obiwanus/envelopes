@@ -2,8 +2,12 @@
     max-width: 1000px;
 }
 
+.table tr.th > th {
+    background: #fcf8e3;
+}
+
 .content {
-    padding: 60px 0;
+    padding: 60px 0 20px;
 }
 
 .pager .period {
@@ -16,6 +20,20 @@
 
 .state-table {
     margin: 30px 0;
+}
+
+.table-day-expenses {
+    width: 100%;
+}
+
+.table-day-expenses > tr {
+    border: 0;
+}
+
+.table-day-expenses .size,
+.table-total-expenses .size,
+.table-balance .size {
+    text-align: right;
 }
 
 /*

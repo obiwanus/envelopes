@@ -19,11 +19,20 @@
     </div>
     <div class="row spend-today">
         <form action="" method="post">
-            <div class="col-md-7">
+            <div class="col-md-5">
                 <input autofocus class="form-control" type="text" placeholder="На что">
             </div>
-            <div class="col-md-3">
+            <div class="col-md-2">
                 <input class="form-control" type="text" placeholder="Сколько">
+            </div>
+            <div class="col-md-3">
+                <select class="form-control" placeholder="Категория">
+                    <option>Категория</option>
+                    <option>Еда</option>
+                    <option>Товары для дома</option>
+                    <option>Машина</option>
+                    <option>Ребенок</option>
+                </select>
             </div>
             <div class="col-md-2">
                 <input type="button" class="form-control btn btn-warning" value="Потратить">
@@ -32,22 +41,34 @@
     </div>
     <div class="row state-table">
         <div class="col-md-5">
-            <table class="table">
-                <tr><th>Траты</th><th>План</th><th>Факт</th></tr>
-                <tr><td>Еда</td><td>300</td><td>328</td></tr>
-
+            <table class="table table-total-expenses">
+                <tr class="th"><th>Траты</th><th class="size">План</th><th class="size">Факт</th></tr>
+                <tr><td>Еда</td><td class="size">300</td><td class="size">328</td></tr>
+                <tr><td>Товары для дома</td><td class="size">65</td><td class="size">22</td></tr>
+                <tr><td>Ребенок</td><td class="size">70</td><td class="size">54</td></tr>
+            </table>
+            <table class="table table-balance">
+                <tr class="success"><td>Доход</td><td class="size">1164</td></tr>
+                <tr class="danger"><td>Потрачено</td><td class="size">903</td></tr>
+                <tr class="info"><td>Осталось</td><td class="size">261</td></tr>
+                <tr class="warning"><td>В день</td><td class="size">48</td></tr>
             </table>
         </div>
         <div class="col-md-7">
             <table class="table table-hover">
-                <tr><th>Дата</th><th>Потрачено</th></tr>
+                <tr class="th"><th>Дата</th><th>Потрачено</th></tr>
                 {% for day in days %}
                     <tr {% if day.status %}class="{{ day.status }}"{% endif %}>
                         <td>{{ day.date|date:"D, d M" }}</td>
                         <td>
-                            {% for expense in day.expenses %}
-                                <b>{{ expense.name }}</b> &nbsp;<input class="input-mini money" type="text" value="{{ expense.size }}">
-                            {% endfor %}
+                            <table class="table-day-expenses">
+                                {% for expense in day.expenses %}
+                                    <tr>
+                                        <td>{{ expense.name }} &nbsp;</td>
+                                        <td class="size">{{ expense.size }}</td>
+                                    </tr>
+                                {% endfor %}
+                            </table>
                         </td>
                     </tr>
                 {% endfor %}
