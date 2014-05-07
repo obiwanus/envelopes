@@ -1,5 +1,5 @@
 # Create a file local_settings.py using this as a template
-from datetime import datetime
+from datetime import date
 
 DATABASES = {
     'default': {
@@ -9,7 +9,7 @@ DATABASES = {
 }
 
 # The start date of your first period
-START_DATE = datetime(2014, 4, 10)
+START_DATE = date(2014, 4, 10)
 
 # It is reasonable to choose the period length so that
 # it matches the periodicity of your main income
