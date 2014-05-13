@@ -4,11 +4,8 @@
 {% block menu %}{% include '_menu.html' with page='funds' %}{% endblock menu %}
 
 {% block content %}
-    <h3>Цели</h3>
-    <p>
-        К <b>целям</b> относятся любые крупные покупки или фонды, например, "Машина" или "Фонд на подарки".
-    </p>
-    <a class="btn btn-primary" href="{% url 'fund_add' %}">Добавить новую цель</a>
+    <h3>Фонды</h3>
+    <a class="btn btn-primary" href="{% url 'fund_add' %}">Добавить новый фонд</a>
 
     <br><br>
 

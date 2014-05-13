@@ -4,8 +4,8 @@
 {% block menu %}{% include '_menu.html' with page='funds' %}{% endblock menu %}
 
 {% block content %}
-    <h3>Добавить цель</h3>
-    <a class="btn" href="{% url 'funds' %}"><i class="icon-arrow-left"></i>&nbsp;Все цели</a>
+    <h3>Добавить фонд</h3>
+    <a class="btn" href="{% url 'funds' %}"><i class="icon-arrow-left"></i>&nbsp;Все фонды</a>
     <br><br>
     <form class="form-horizontal" method="POST" action="{% url "fund_add" %}">
         {% csrf_token %}
