@@ -43,7 +43,7 @@ class Fund(models.Model):
     start_date = models.DateField('Дата начала накопления', default=datetime.date.today())
     end_date = models.DateField('Цель надо достигнуть к', blank=True, null=True)
     payment_size = models.DecimalField('Размер начислений', default=0, max_digits=20, decimal_places=2)
-    payment_periodicity = models.CharField('Периодичность начислений',
+    payment_periodicity = models.CharField('Периодичность начислений', blank=True, null=True,
                                            choices=PERIODICITY_CHOICES, max_length=50, default='f')
 
 
