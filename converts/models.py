@@ -32,6 +32,7 @@ class Expense(models.Model):
     size = models.DecimalField('Размер (NZD)', default=0, max_digits=20, decimal_places=2)
     start_date = models.DateField('Дата начала', default=datetime.date.today())
     end_date = models.DateField('Последняя трата не позднее', blank=True, null=True)
+    floating = models.BooleanField('Размер не точен', default=False)
 
     def __str__(self):
         return '%s (%s)' % (self.name, self.size)
