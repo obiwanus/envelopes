@@ -12,6 +12,10 @@ PERIODICITY_CHOICES = (
 )
 
 
+class Category(models.Model):
+    name = models.CharField('Название', max_length=255)
+
+
 class Income(models.Model):
     name = models.CharField('Название', max_length=200, db_index=True)
     periodicity = models.CharField('Периодичность', choices=PERIODICITY_CHOICES, max_length=50, default='f')
