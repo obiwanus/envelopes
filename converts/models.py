@@ -17,6 +17,7 @@ class Category(models.Model):
 
 
 class Income(models.Model):
+    category = models.ForeignKey(Category, null=True, blank=True)
     name = models.CharField('Название', max_length=200, db_index=True)
     periodicity = models.CharField('Периодичность', choices=PERIODICITY_CHOICES, max_length=50, default='f')
     size = models.DecimalField('Размер (NZD)', default=0, max_digits=20, decimal_places=2)
@@ -25,6 +26,7 @@ class Income(models.Model):
 
 
 class Expense(models.Model):
+    category = models.ForeignKey(Category, null=True, blank=True)
     name = models.CharField('Название', max_length=200, db_index=True)
     periodicity = models.CharField('Периодичность', choices=PERIODICITY_CHOICES, max_length=50, default='f')
     size = models.DecimalField('Размер (NZD)', default=0, max_digits=20, decimal_places=2)
